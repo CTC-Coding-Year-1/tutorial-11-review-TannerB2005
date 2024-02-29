@@ -70,7 +70,7 @@ function startUp() {
 
    setupPuzzle();
 
-   document.getElementById("check").onclick=checkSolution;
+   document.getElementById("check").onclick=findErrors;
 
    document.getElementById("solve").onclick=showSolution;
 }
@@ -114,16 +114,65 @@ function setupPuzzle() {
       function(e) {
          if (e.shiftKey) {
             e.target.style.backgroundColor = "white";
-            e.target.style.backgroundColor
+            e.target.style.backgroundColor = "black";
+            e.target.style.borderRadius = "0";
+         } else if (e.altKey) {
+            e.target.style.backgroundColor = "black";
+            e.target.style.color = "white";
+            e.target.borderRadius = "0";
+         } else {
+            e.target.style.backgroundColor = "rgb(101, 101, 101)";
+            e.target.style.color= "white";
+            e.target.style.borderRadius = "50%";
          }
+          
+         e.preventDefault(); 
+         });
+
+         allCells[i].addEventListener("mouseover",
+         function(e) {
+            if (e.shiftKey) {
+               e.target.style.cursor = "url(../imgs/jpf_eraser.png), alias";
+            } else if (e.altKey) {
+               e.target.style.cursor = "url(../imgs/jpf_block.png), cell";
+            } else {
+               e.target.style.cursor = "url(../imgs/jpf_circle.png), pointer";
+            }
+         });
+
+         allCells[i].addEventListener("mouseup", checkSolution);
       }
-      )
+
+      }
+
+         function findErrors() {
+            for (var i = 0; i < allCells.length; i++) {
+               if ((allCells[i].className === "blocks" &&
+               allCells[i].style.backgroundColor === "rgb(101, 101, 101)")
+
+               ||
+
+               (allCells[i].style.backgroundColor === "rgb(101, 101, 101)")
+
+               ||
+
+               (allCells[i].className === "circles" &&
+               allCells[i].style.backgroundColor === "black")) {
+               allCells[i].style.color = "red";
+               }
+
+               }
+
+               setTimeout(
+               function() {
+               for(var i = 0; i < allCells.length; i++) {
+               if (allCells[i].style.color === "red") {
+                  allCells[i].style.color = "white"
+               }               
+            }
+         },
+      1000);
    }
-}
-
-
-
-
 
 
 
