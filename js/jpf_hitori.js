@@ -49,7 +49,7 @@
 
 
 
-var allCells;
+let allCells;
 
 // Starts when page is loaded in browser
 window.onload = startUp;
@@ -71,9 +71,9 @@ function startUp() {
 
    setupPuzzle();
 
-   document.getElementById("check").onclick=findErrors;
+   document.getElementById("check").onclick = findErrors;
 
-   document.getElementById("solve").onclick=showSolution;
+   document.getElementById("solve").onclick = showSolution;
 }
 
 function switchPuzzle(e) {
@@ -109,14 +109,14 @@ function setupPuzzle() {
       
       allCells[i].style.color = "black";
 
-      allCells[i].style.borderRadius = "0";
+      allCells[i].style.borderRadius = 0;
 
       allCells[i].addEventListener("mousedown",
       function(e) {
          //When shift is pressed
          if (e.shiftKey) {
             e.target.style.backgroundColor = "white";
-            e.target.style.backgroundColor = "black";
+            e.target.style.color = "black";
             e.target.style.borderRadius = "0";
          //When alt is pressed
          } else if (e.altKey) {
@@ -124,12 +124,13 @@ function setupPuzzle() {
             e.target.style.color = "white";
             e.target.style.borderRadius = "0";
          } else {
-            e.target.style.backgroundColor = "rgb(101, 101, 101)"
+            e.target.style.backgroundColor = "rgb(101, 101, 101)";
             e.target.style.color = "white";
             e.target.style.borderRadius = "50%";
          }
          e.preventDefault();
-      });
+      }
+   );
       allCells[i].addEventListener("mouseover",
       function(e) {
          if (e.shiftKey) {
@@ -139,15 +140,16 @@ function setupPuzzle() {
          } else {
             e.target.style.cursor = "url(../imgs/jpf_circle.png), pointer";
          }
-      });
+      }
+   );
       allCells[i].addEventListener("mouseup", checkSolution);
    }
 
 }
 
 function findErrors() {
-   for (var i = 0; i < allCells.length;i++) {
-      if((allCells[i].className === "blocks" &&
+   for (var i = 0; i < allCells.length; i++) {
+      if ((allCells[i].className === "blocks" &&
       allCells[i].style.backgroundColor === "rgb(101, 101, 101)")
 
       || 
@@ -161,19 +163,12 @@ function findErrors() {
 
       setTimeout(
       function() {
-      for(var i = 0; i < allCells.length; i++) {
-      if (allCells[i].style.color === "red") {
-      allCells[i].style.color = "white" 
-
+      for (var i = 0; i < allCells.length; i++) {
+      if (allCells[i].style.color === "red") 
+      {allCells[i].style.color = "white";}
       }
-   
-      }
-
-      },
-  
-      1000);
-
-      }
+      }, 1000);
+   }
 
 
 
@@ -197,15 +192,17 @@ function checkSolution() {
 
       /* A cell is incorrect if it is in the block class and is not black
          or in the circle class and is not white */
-      if ( (cellClass == "blocks" && cellColor !== "black") || 
-           (cellClass == "circles" && cellColor !== "rgb(101, 101, 101)")) {
+      if ( (cellClass === "blocks" && cellColor !== "black") || 
+           (cellClass === "circles" && cellColor !== "rgb(101, 101, 101)")) {
          solved = false;
          break;
       }
    }
 
    /* If solved is still true after the loop, display an alert box */
-   if (solved) alert("Congratulations! You solved the puzzle!");
+   if (solved) { 
+      alert("Congratulations! You solved the puzzle!");
+   }
 }
 
 function showSolution () {
@@ -213,7 +210,7 @@ function showSolution () {
       allCells[i].style.color = "";
       allCells[i].style.backgroundColor = "";
       allCells[i].style.borderRadius = "";
-   };   
+   }
 }
 
 function drawHitori(numbers, blocks, rating) {
@@ -243,9 +240,11 @@ function drawHitori(numbers, blocks, rating) {
       htmlString += "<tr>";
 
       for (var j = 0; j < totalCols; j++) {
-         if (blocks[i][j] == "#") htmlString += "<td  class='blocks'>"
-         else htmlString += "<td class='circles'>";
-
+         if (blocks[i][j] == "#") {
+            htmlString += "<td  class='blocks'>";
+         } else {
+            htmlString += "<td class='circles'>";
+         }
          htmlString += numbers[i][j];
          htmlString +="</td>";
       }
